@@ -10,13 +10,18 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:emerald-templates-vscode.helloWorld"
+        "onCommand:emerald-templates-vscode.helloWorld",
+        "onCommand:emerald-templates-vscode.listProjects"
 	],
 	"main": "./source/extension.js",
 	"contributes": {
 		"commands": [{
             "command": "emerald-templates-vscode.helloWorld",
             "title": "Hello World"
+		}, 
+		{
+			"command": "emerald-templates-vscode.listProjects", 
+			"title": "Emerald Templates: List Projects"
 		}]
 	},
 	"scripts": {

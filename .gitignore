@@ -1,0 +1,8 @@
+node_modules/
+/emerald-global-config.json
+/templates/
+tmp/
+node_modules_bak/
+/script-dependencies/
+!/script-dependencies/package.json
+.vscode-test/

@@ -1,8 +1,19 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
-//const requireGlobal =
-//const emeraldTemplates = requireGlobal("emerald-templates");
+const { inspect } = require("util");
+let emeraldTemplates;
+try {
+  emeraldTemplates = require("./emeraldTemplates");
+} catch (e) {
+  if (!(e instanceof Error)) {
+    e = new Error(e);
+  }
+  e.message =
+    "The following error ocurred while trying to load Emerald Templates (make sure it's installed globally):" +
+    e.message;
+  throw e;
+}
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,7 +24,13 @@ const vscode = require("vscode");
 function activate(context) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
-  //vscode.window.showInformationMessage(Object.keys(emeraldTemplates));
+  // vscode.window.showInformationMessage(
+  //   typeof emeraldTemplates +
+  //     " " +
+  //     Object.entries(emeraldTemplates)
+  //       .map(([key]) => `"${key}"`)
+  //       .join(", ")
+  // );
   console.log(
     'Congratulations, your extension "emerald-templates-vscode" is now active!'
   );
@@ -32,8 +49,19 @@ function activate(context) {
       );
     }
   );
+  let disposable2 = vscode.commands.registerCommand(
+    "emerald-templates-vscode.listProjects",
+    async function () {
+      // The code you place here will be executed every time your command is executed
+
+      vscode.window.showInformationMessage(
+        inspect(await emeraldTemplates.listProjects())
+      );
+    }
+  );
 
   context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable2);
 }
 
 // this method is called when your extension is deactivated
