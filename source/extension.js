@@ -14,6 +14,7 @@ try {
     e.message;
   throw e;
 }
+const { Options, listProjects } = emeraldTemplates;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -53,9 +54,13 @@ function activate(context) {
     "emerald-templates-vscode.listProjects",
     async function () {
       // The code you place here will be executed every time your command is executed
-
+      const projects = await listProjects(/*new Options({ mode: "vscode" })*/);
       vscode.window.showInformationMessage(
-        inspect(await emeraldTemplates.listProjects())
+        "Available Projects: " +
+          Object.values(projects)
+            .map((project) => project.name)
+            .sort()
+            .join(", ")
       );
     }
   );
